@@ -7,26 +7,34 @@ using System.IO;
 
 public class MongoC : ModuleRules
 {
+	// Path to the plugins binary folder
 	private string BinariesPath
 	{
-		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../Binaries/")); }
+		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "..", "..", "Binaries")); }
 	}
 
-	private void CopyToBinaries(string SourceFilePath, ReadOnlyTargetRules Target)
+	// Append platform folder (e.g. /Win64) to binary path
+	private string BinariesPlatformPath
 	{
-		string Filename = Path.GetFileName(SourceFilePath);
-		string BinariesPlatformPath = Path.Combine(BinariesPath, Target.Platform.ToString());
+		get { return Path.Combine(BinariesPath, Target.Platform.ToString()); }
+	}
 
-		//System.Console.WriteLine("Copying {0} to {1}", SourceFilePath, BinariesPlatformPath);
+	// Helper function to copy libraries from third party folder to the plugins binary folder
+	private void CopyToBinariesFolder(string SourceFilePath, ReadOnlyTargetRules Target)
+	{
+		// Get filename from path
+		string Filename = Path.GetFileName(SourceFilePath);
 
 		if (!Directory.Exists(BinariesPlatformPath))
 		{
 			Directory.CreateDirectory(BinariesPlatformPath);
+			System.Console.WriteLine("[UMongoC] Creating directory {0}", BinariesPlatformPath);
 		}
 
 		if (!File.Exists(Path.Combine(BinariesPlatformPath, Filename)))
 		{
 			File.Copy(SourceFilePath, Path.Combine(BinariesPlatformPath, Filename), true);
+			System.Console.WriteLine("[UMongoC] Copying {0} to {1}", SourceFilePath, BinariesPlatformPath);
 		}
 	}
 
@@ -43,35 +51,35 @@ public class MongoC : ModuleRules
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			// .h
-			string HeadersDir = ModuleDirectory + "/mongo-c-driver/include/";
+			string HeadersDir = Path.Combine(ModuleDirectory, "mongo-c-driver", "include");
 			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libbson-1.0"));
 			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libmongoc-1.0"));
 
 			// .lib
-			string LibsDir = ModuleDirectory + "/mongo-c-driver/lib/";
+			string LibsDir = Path.Combine(ModuleDirectory, "mongo-c-driver", "lib");
 			PublicLibraryPaths.Add(LibsDir);
 			PublicAdditionalLibraries.Add("bson-1.0.lib");
 			PublicAdditionalLibraries.Add("mongoc-1.0.lib");
 
 			// .dll
-			string BinDir = ModuleDirectory + "/mongo-c-driver/bin/";
+			string BinDir = Path.Combine(ModuleDirectory, "mongo-c-driver", "bin");
 			//RuntimeDependencies.Add(Path.Combine(BinDir, "libbson-1.0.dll"));
 			//RuntimeDependencies.Add(Path.Combine(BinDir, "libmongoc-1.0.dll"));
 
 			// Copy dll's to plugin /Binaries
-			CopyToBinaries(Path.Combine(BinDir, "libbson-1.0.dll"), Target);
-			CopyToBinaries(Path.Combine(BinDir, "libmongoc-1.0.dll"), Target);
+			CopyToBinariesFolder(Path.Combine(BinDir, "libbson-1.0.dll"), Target);
+			CopyToBinariesFolder(Path.Combine(BinDir, "libmongoc-1.0.dll"), Target);
 		}
 		else if (Target.Platform == UnrealTargetPlatform.Linux)
 		{
 			Console.WriteLine("Using Linux Mongo/BSON library files");
 			// .h
-			string HeadersDir = ModuleDirectory + "/mongo-c-driver-linux/include/";
+			string HeadersDir = Path.Combine(ModuleDirectory, "mongo-c-driver-linux", "include");
 			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libbson-1.0"));
 			PublicIncludePaths.Add(Path.Combine(HeadersDir, "libmongoc-1.0"));
 
 			// .lib
-			string LibsDir = ModuleDirectory + "/mongo-c-driver-linux/lib/";
+			string LibsDir = Path.Combine(ModuleDirectory, "mongo-c-driver-linux", "lib");
 			PublicLibraryPaths.Add(LibsDir);
 			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libbson-static-1.0.a"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libmongoc-static-1.0.a"));
