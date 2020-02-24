@@ -1,12 +1,12 @@
-// Copyright 2017-2019, Institute for Artificial Intelligence - University of Bremen
-// Author: Andrei Haidu (http://haidu.eu), Guan Jianyu
+// Copyright 2020, Institute for Artificial Intelligence - University of Bremen
+// Author: Andrei Haidu (http://haidu.eu)
 
 using UnrealBuildTool;
 
 
-public class libmongo : ModuleRules
+public class UMongoC : ModuleRules
 {
-	public libmongo(ReadOnlyTargetRules Target) : base(Target)
+	public UMongoC(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 
@@ -30,7 +30,6 @@ public class libmongo : ModuleRules
 		new string[]
 		{
 			"Core",
-			"Projects", // FPlatformProcess::GetDllHandle
 		}
 		);
 	}
