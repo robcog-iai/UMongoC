@@ -57,9 +57,8 @@ public class MongoC : ModuleRules
 
 			// .lib
 			string LibsDir = Path.Combine(ModuleDirectory, "mongo-c-driver", "lib");
-			PublicLibraryPaths.Add(LibsDir);
-			PublicAdditionalLibraries.Add("bson-1.0.lib");
-			PublicAdditionalLibraries.Add("mongoc-1.0.lib");
+			PublicAdditionalLibraries.Add(Path.Combine(LibsDir, "bson-1.0.lib"));
+			PublicAdditionalLibraries.Add(Path.Combine(LibsDir, "mongoc-1.0.lib"));
 
 			// .dll
 			string BinDir = Path.Combine(ModuleDirectory, "mongo-c-driver", "bin");
@@ -80,7 +79,6 @@ public class MongoC : ModuleRules
 
 			// .lib
 			string LibsDir = Path.Combine(ModuleDirectory, "mongo-c-driver-linux", "lib");
-			PublicLibraryPaths.Add(LibsDir);
 			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libbson-static-1.0.a"));
 			PublicAdditionalLibraries.Add(Path.Combine(LibsDir,"libmongoc-static-1.0.a"));
 			}
