@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_SSL_H
 #define MONGOC_SSL_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
+#include "mongoc-macros.h"
 
 BSON_BEGIN_DECLS
 
@@ -39,7 +37,8 @@ struct _mongoc_ssl_opt_t {
    const char *crl_file;
    bool weak_cert_validation;
    bool allow_invalid_hostname;
-   void *padding[7];
+   void *internal;
+   void *padding[6];
 };
 
 

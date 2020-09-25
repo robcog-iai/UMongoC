@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_STREAM_TLS_H
 #define MONGOC_STREAM_TLS_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
-#include "mongoc/mongoc-ssl.h"
-#include "mongoc/mongoc-stream.h"
+#include "mongoc-macros.h"
+#include "mongoc-ssl.h"
+#include "mongoc-stream.h"
 
 
 BSON_BEGIN_DECLS

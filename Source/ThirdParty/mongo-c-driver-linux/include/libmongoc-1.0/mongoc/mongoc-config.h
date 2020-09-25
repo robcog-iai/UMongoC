@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
+#error "Only <mongoc/mongoc.h> can be included directly."
+#endif
+
 
 #ifndef MONGOC_CONFIG_H
 #define MONGOC_CONFIG_H
@@ -25,7 +29,7 @@
 #define MONGOC_USER_SET_LDFLAGS ""
 
 /* MONGOC_CC is used to determine what C compiler was used to compile mongoc */
-#define MONGOC_CC "/usr/bin/clang"
+#define MONGOC_CC "/usr/bin/cc"
 
 /*
  * MONGOC_ENABLE_SSL_SECURE_CHANNEL is set from configure to determine if we are
@@ -86,7 +90,7 @@
  * MONGOC_ENABLE_SSL_OPENSSL is set from configure to determine if we are
  * compiled with OpenSSL support.
  */
-#define MONGOC_ENABLE_SSL_OPENSSL 1
+#define MONGOC_ENABLE_SSL_OPENSSL 0
 
 #if MONGOC_ENABLE_SSL_OPENSSL != 1
 #  undef MONGOC_ENABLE_SSL_OPENSSL
@@ -97,7 +101,7 @@
  * MONGOC_ENABLE_CRYPTO_LIBCRYPTO is set from configure to determine if we are
  * compiled with OpenSSL support.
  */
-#define MONGOC_ENABLE_CRYPTO_LIBCRYPTO 1
+#define MONGOC_ENABLE_CRYPTO_LIBCRYPTO 0
 
 #if MONGOC_ENABLE_CRYPTO_LIBCRYPTO != 1
 #  undef MONGOC_ENABLE_CRYPTO_LIBCRYPTO
@@ -108,7 +112,7 @@
  * MONGOC_ENABLE_SSL is set from configure to determine if we are
  * compiled with any SSL support.
  */
-#define MONGOC_ENABLE_SSL 1
+#define MONGOC_ENABLE_SSL 0
 
 #if MONGOC_ENABLE_SSL != 1
 #  undef MONGOC_ENABLE_SSL
@@ -119,7 +123,7 @@
  * MONGOC_ENABLE_CRYPTO is set from configure to determine if we are
  * compiled with any crypto support.
  */
-#define MONGOC_ENABLE_CRYPTO 1
+#define MONGOC_ENABLE_CRYPTO 0
 
 #if MONGOC_ENABLE_CRYPTO != 1
 #  undef MONGOC_ENABLE_CRYPTO
@@ -178,18 +182,6 @@
 #  undef MONGOC_ENABLE_SASL_SSPI
 #endif
 
-
-/*
- * MONGOC_ENABLE_SASL_GSSAPI is set from configure to determine if we are
- * compiled with GSSAPI support.
- */
-#define MONGOC_ENABLE_SASL_GSSAPI 0
-
-#if MONGOC_ENABLE_SASL_GSSAPI != 1
-#  undef MONGOC_ENABLE_SASL_GSSAPI
-#endif
-
-
 /*
  * MONGOC_HAVE_SASL_CLIENT_DONE is set from configure to determine if we
  * have SASL and its version is new enough to use sasl_client_done (),
@@ -206,7 +198,7 @@
  * Disable automatic calls to mongoc_init() and mongoc_cleanup()
  * before main() is called, and after exit() (respectively).
  */
-#define MONGOC_NO_AUTOMATIC_GLOBALS 1
+#define MONGOC_NO_AUTOMATIC_GLOBALS 0
 
 #if MONGOC_NO_AUTOMATIC_GLOBALS != 1
 #  undef MONGOC_NO_AUTOMATIC_GLOBALS
@@ -238,7 +230,7 @@
  * MONGOC_HAVE_RES_NSEARCH is set from configure to determine if we
  * have thread-safe res_nsearch().
  */
-#define MONGOC_HAVE_RES_NSEARCH 1
+#define MONGOC_HAVE_RES_NSEARCH 0
 
 #if MONGOC_HAVE_RES_NSEARCH != 1
 #  undef MONGOC_HAVE_RES_NSEARCH
@@ -260,7 +252,7 @@
  * MONGOC_HAVE_RES_NCLOSE is set from configure to determine if we
  * have Linux's res_nclose().
  */
-#define MONGOC_HAVE_RES_NCLOSE 1
+#define MONGOC_HAVE_RES_NCLOSE 0
 
 #if MONGOC_HAVE_RES_NCLOSE != 1
 #  undef MONGOC_HAVE_RES_NCLOSE
@@ -300,7 +292,7 @@
  * Set if we have snappy compression support
  *
  */
-#define MONGOC_ENABLE_COMPRESSION_SNAPPY 1
+#define MONGOC_ENABLE_COMPRESSION_SNAPPY 0
 
 #if MONGOC_ENABLE_COMPRESSION_SNAPPY != 1
 #  undef MONGOC_ENABLE_COMPRESSION_SNAPPY
@@ -315,6 +307,16 @@
 
 #if MONGOC_ENABLE_COMPRESSION_ZLIB != 1
 #  undef MONGOC_ENABLE_COMPRESSION_ZLIB
+#endif
+
+/*
+ * Set if we have zstd compression support
+ *
+ */
+#define MONGOC_ENABLE_COMPRESSION_ZSTD 0
+
+#if MONGOC_ENABLE_COMPRESSION_ZSTD != 1
+#  undef MONGOC_ENABLE_COMPRESSION_ZSTD
 #endif
 
 /*
@@ -370,11 +372,41 @@
 
 
 /*
+ * Set if we have Client Side Encryption support.
+ */
+
+#define MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION 0
+
+#if MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION != 1
+#  undef MONGOC_ENABLE_CLIENT_SIDE_ENCRYPTION
+#endif
+
+
+/*
+ * Set if struct sockaddr_storage has __ss_family (instead of ss_family)
+ */
+
+#define MONGOC_HAVE_SS_FAMILY 1
+
+#if MONGOC_HAVE_SS_FAMILY != 1
+#  undef MONGOC_HAVE_SS_FAMILY
+#endif
+
+/*
+ * Set if building with AWS IAM support.
+ */
+#define MONGOC_ENABLE_MONGODB_AWS_AUTH 0
+
+#if MONGOC_ENABLE_MONGODB_AWS_AUTH != 1
+#  undef MONGOC_ENABLE_MONGODB_AWS_AUTH
+#endif
+
+/*
  * NOTICE:
  * If you're about to update this file and add a config flag, make sure to
  * update:
  * o The bitfield in mongoc-handshake-private.h
- * o _get_config_bitfield() in mongoc-handshake.c
+ * o _mongoc_handshake_get_config_hex_string() in mongoc-handshake.c
  * o examples/parse_handshake_cfg.py
  * o test_handshake_config_string in test-mongoc-handshake.c
  */

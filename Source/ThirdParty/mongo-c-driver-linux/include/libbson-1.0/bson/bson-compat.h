@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
+#include "bson-prelude.h"
+
 
 #ifndef BSON_COMPAT_H
 #define BSON_COMPAT_H
-
-
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
 
 
 #if defined(__MINGW32__)
@@ -34,8 +31,8 @@
 #endif
 #endif
 
-#include "bson/bson-config.h"
-#include "bson/bson-macros.h"
+#include "bson-config.h"
+#include "bson-macros.h"
 
 
 #ifdef BSON_OS_WIN32
@@ -67,7 +64,7 @@
 #endif
 
 
-#include "bson/bson-macros.h"
+#include "bson-macros.h"
 
 
 #include <errno.h>

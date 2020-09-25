@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_GRIDFS_FILE_H
 #define MONGOC_GRIDFS_FILE_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
-#include "mongoc/mongoc-socket.h"
+#include "mongoc-macros.h"
+#include "mongoc-socket.h"
 
 BSON_BEGIN_DECLS
 

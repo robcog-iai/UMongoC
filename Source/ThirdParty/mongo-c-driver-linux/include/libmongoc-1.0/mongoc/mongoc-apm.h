@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_APM_H
 #define MONGOC_APM_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
-#include "mongoc/mongoc-host-list.h"
-#include "mongoc/mongoc-server-description.h"
-#include "mongoc/mongoc-topology-description.h"
+#include "mongoc-macros.h"
+#include "mongoc-host-list.h"
+#include "mongoc-server-description.h"
+#include "mongoc-topology-description.h"
 
 BSON_BEGIN_DECLS
 
@@ -145,8 +143,7 @@ MONGOC_EXPORT (void)
 mongoc_apm_command_failed_get_error (const mongoc_apm_command_failed_t *event,
                                      bson_error_t *error);
 MONGOC_EXPORT (const bson_t *)
-mongoc_apm_command_failed_get_reply (
-   const mongoc_apm_command_failed_t *event);
+mongoc_apm_command_failed_get_reply (const mongoc_apm_command_failed_t *event);
 MONGOC_EXPORT (int64_t)
 mongoc_apm_command_failed_get_request_id (
    const mongoc_apm_command_failed_t *event);
@@ -241,6 +238,9 @@ mongoc_apm_server_heartbeat_started_get_host (
 MONGOC_EXPORT (void *)
 mongoc_apm_server_heartbeat_started_get_context (
    const mongoc_apm_server_heartbeat_started_t *event);
+MONGOC_EXPORT (bool)
+mongoc_apm_server_heartbeat_started_get_awaited (
+   const mongoc_apm_server_heartbeat_started_t *event);
 
 /* heartbeat-succeeded event fields */
 
@@ -256,6 +256,9 @@ mongoc_apm_server_heartbeat_succeeded_get_host (
 MONGOC_EXPORT (void *)
 mongoc_apm_server_heartbeat_succeeded_get_context (
    const mongoc_apm_server_heartbeat_succeeded_t *event);
+MONGOC_EXPORT (bool)
+mongoc_apm_server_heartbeat_succeeded_get_awaited (
+   const mongoc_apm_server_heartbeat_succeeded_t *event);
 
 /* heartbeat-failed event fields */
 
@@ -270,6 +273,9 @@ mongoc_apm_server_heartbeat_failed_get_host (
    const mongoc_apm_server_heartbeat_failed_t *event);
 MONGOC_EXPORT (void *)
 mongoc_apm_server_heartbeat_failed_get_context (
+   const mongoc_apm_server_heartbeat_failed_t *event);
+MONGOC_EXPORT (bool)
+mongoc_apm_server_heartbeat_failed_get_awaited (
    const mongoc_apm_server_heartbeat_failed_t *event);
 
 

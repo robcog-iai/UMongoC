@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_READ_PREFS_H
 #define MONGOC_READ_PREFS_H
 
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
-
 #include <bson/bson.h>
 
-#include "mongoc/mongoc-macros.h"
-#include "mongoc/mongoc-config.h"
+#include "mongoc-macros.h"
+#include "mongoc-config.h"
 
 BSON_BEGIN_DECLS
 
@@ -68,6 +66,10 @@ mongoc_read_prefs_get_max_staleness_seconds (
 MONGOC_EXPORT (void)
 mongoc_read_prefs_set_max_staleness_seconds (mongoc_read_prefs_t *read_prefs,
                                              int64_t max_staleness_seconds);
+MONGOC_EXPORT (const bson_t *)
+mongoc_read_prefs_get_hedge (const mongoc_read_prefs_t *read_prefs);
+MONGOC_EXPORT (void)
+mongoc_read_prefs_set_hedge (mongoc_read_prefs_t *read_prefs, const bson_t *hedge);
 MONGOC_EXPORT (bool)
 mongoc_read_prefs_is_valid (const mongoc_read_prefs_t *read_prefs);
 
