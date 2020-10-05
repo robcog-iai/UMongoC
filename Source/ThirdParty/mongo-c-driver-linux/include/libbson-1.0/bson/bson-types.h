@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
+#include "bson-prelude.h"
+
 
 #ifndef BSON_TYPES_H
 #define BSON_TYPES_H
 
 
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
-
-
 #include <stdlib.h>
 #include <sys/types.h>
 
-#include "bson/bson-macros.h"
-#include "bson/bson-config.h"
-#include "bson/bson-compat.h"
-#include "bson/bson-endian.h"
+#include "bson-macros.h"
+#include "bson-config.h"
+#include "bson-compat.h"
+#include "bson-endian.h"
 
 BSON_BEGIN_DECLS
 
@@ -60,10 +57,9 @@ typedef uint32_t bson_unichar_t;
  *
  * %BSON_CONTEXT_NONE: Use default options.
  * %BSON_CONTEXT_THREAD_SAFE: Context will be called from multiple threads.
+ * %BSON_CONTEXT_DISABLE_HOST_CACHE: Does nothing, is ignored.
  * %BSON_CONTEXT_DISABLE_PID_CACHE: Call getpid() instead of caching the
  *   result of getpid() when initializing the context.
- * %BSON_CONTEXT_DISABLE_HOST_CACHE: Call gethostname() instead of caching the
- *   result of gethostname() when initializing the context.
  */
 typedef enum {
    BSON_CONTEXT_NONE = 0,
@@ -274,6 +270,7 @@ typedef enum {
    BSON_SUBTYPE_UUID_DEPRECATED = 0x03,
    BSON_SUBTYPE_UUID = 0x04,
    BSON_SUBTYPE_MD5 = 0x05,
+   BSON_SUBTYPE_ENCRYPTED = 0x06,
    BSON_SUBTYPE_USER = 0x80,
 } bson_subtype_t;
 

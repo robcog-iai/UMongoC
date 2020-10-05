@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
+#include "bson-prelude.h"
+
 
 #ifndef BSON_MACROS_H
 #define BSON_MACROS_H
-
-
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
 
 
 #include <stdio.h>
@@ -30,7 +27,7 @@
 #include <algorithm>
 #endif
 
-#include "bson/bson-config.h"
+#include "bson-config.h"
 
 
 #if BSON_OS == 1
@@ -179,7 +176,7 @@
 #define bson_str_empty0(s) (!s || !s[0])
 
 
-#if defined(_WIN32)
+#if defined(_MSC_VER)
 #define BSON_FUNC __FUNCTION__
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ < 199901L
 #define BSON_FUNC __FUNCTION__
@@ -199,6 +196,18 @@
          abort ();                                         \
       }                                                    \
    } while (0)
+       
+/* Used for asserting parameters to provide a more precise error message */
+#define BSON_ASSERT_PARAM(param)                                                   \
+   do {                                                                            \
+      if ((BSON_UNLIKELY (param == NULL))) {                                       \
+         fprintf (stderr,                                                          \
+                  "The parameter: %s, in function %s, cannot be NULL\n",           \
+                  #param,                                                          \
+                  BSON_FUNC);                                                      \
+         abort ();                                                                 \
+      }                                                                            \
+   } while (0)      
 
 /* obsolete macros, preserved for compatibility */
 #define BSON_STATIC_ASSERT(s) BSON_STATIC_ASSERT_ (s, __LINE__)

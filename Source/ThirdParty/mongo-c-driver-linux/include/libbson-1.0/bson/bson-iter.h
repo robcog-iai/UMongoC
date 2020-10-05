@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
+#include "bson-prelude.h"
+
 
 #ifndef BSON_ITER_H
 #define BSON_ITER_H
 
 
-#if !defined(BSON_INSIDE) && !defined(BSON_COMPILATION)
-#error "Only <bson/bson.h> can be included directly."
-#endif
-
-
-#include "bson/bson.h"
-#include "bson/bson-endian.h"
-#include "bson/bson-macros.h"
-#include "bson/bson-types.h"
+#include "bson.h"
+#include "bson-endian.h"
+#include "bson-macros.h"
+#include "bson-types.h"
 
 
 BSON_BEGIN_DECLS
@@ -514,7 +511,7 @@ bson_iter_overwrite_double (bson_iter_t *iter, double value);
 
 
 BSON_EXPORT (void)
-bson_iter_overwrite_decimal128 (bson_iter_t *iter, bson_decimal128_t *value);
+bson_iter_overwrite_decimal128 (bson_iter_t *iter, const bson_decimal128_t *value);
 
 
 BSON_EXPORT (void)

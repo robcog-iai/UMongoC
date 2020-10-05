@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
+#include "mongoc-prelude.h"
 
 
 #ifndef MONGOC_VERSION_FUNCTIONS_H
@@ -25,7 +22,7 @@
 
 #include <bson/bson.h> /* for "bool" */
 
-#include "mongoc/mongoc-macros.h"
+#include "mongoc-macros.h"
 
 BSON_BEGIN_DECLS
 

@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+#include "mongoc-prelude.h"
+
 #ifndef MONGOC_FLAGS_H
 #define MONGOC_FLAGS_H
-
-#if !defined(MONGOC_INSIDE) && !defined(MONGOC_COMPILATION)
-#error "Only <mongoc/mongoc.h> can be included directly."
-#endif
 
 #include <bson/bson.h>
 
@@ -143,7 +141,6 @@ typedef enum {
 
 
 #define MONGOC_UPDATE_NO_VALIDATE (1U << 31)
-
 
 BSON_END_DECLS
 
