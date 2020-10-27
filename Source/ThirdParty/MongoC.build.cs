@@ -43,8 +43,8 @@ public class MongoC : ModuleRules
 		// We are just setting up paths for pre-compiled binaries.
 		Type = ModuleType.External;
 
-		bEnableUndefinedIdentifierWarnings = false;
-		bEnableExceptions = true;
+		//bEnableUndefinedIdentifierWarnings = false;
+		//bEnableExceptions = true;
 		//bUseRTTI = true;
 
 
